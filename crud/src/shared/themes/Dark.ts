@@ -1,7 +1,7 @@
 import { createTheme } from '@mui/material';
-import { amber, grey, indigo } from '@mui/material/colors';
+import { indigo, amber } from '@mui/material/colors';
 
-export const LightTheme = createTheme({
+export const DarkTheme = createTheme({
   palette: {
     primary: {
       main: indigo[600],
@@ -16,8 +16,8 @@ export const LightTheme = createTheme({
       contrastText: amber[50]
     },
     background: {
-      default: grey[300],
-      paper: grey[50]
+      default: '#0A2647',
+      paper: '#205295',
     }
   },
 });
