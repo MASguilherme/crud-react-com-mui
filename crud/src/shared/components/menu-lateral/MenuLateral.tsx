@@ -1,4 +1,4 @@
-import { Drawer, useTheme, Avatar, Divider, List, ListItemButton, ListItemText, Icon, ListItemIcon } from '@mui/material';
+import { Drawer, useTheme, Avatar, Divider, List, ListItemButton, ListItemText, Icon, ListItemIcon, useMediaQuery } from '@mui/material';
 import { Box } from '@mui/system';
 
 interface MenuLateralProps {
@@ -7,10 +7,11 @@ interface MenuLateralProps {
 export const MenuLateral: React.FC<MenuLateralProps> = ({ children }) => {
 
   const theme = useTheme();
+  const smDown = useMediaQuery(theme.breakpoints.down('sm'));
 
   return (
     <>
-      <Drawer variant='permanent'>
+      <Drawer open={true} variant={smDown ? 'temporary':'permanent'}>
         <Box width={theme.spacing(26)} height='100%'
           padding={theme.spacing(2)} display='flex' flexDirection='column'>
 
