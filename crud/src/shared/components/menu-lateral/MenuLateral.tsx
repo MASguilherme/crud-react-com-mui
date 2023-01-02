@@ -1,49 +1,66 @@
-import { Drawer, useTheme, Avatar, Divider, List, ListItemButton, ListItemText, Icon, ListItemIcon, useMediaQuery } from '@mui/material';
+import {
+    Drawer,
+    useTheme,
+    Avatar,
+    Divider,
+    List,
+    ListItemButton,
+    ListItemText,
+    Icon,
+    ListItemIcon,
+    useMediaQuery
+} from '@mui/material';
 import { Box } from '@mui/system';
 
+import { useDrawerContext } from '../../contexts';
+
 interface MenuLateralProps {
-  children: React.ReactNode;
+    children: React.ReactNode;
 }
+
 export const MenuLateral: React.FC<MenuLateralProps> = ({ children }) => {
 
-  const theme = useTheme();
-  const smDown = useMediaQuery(theme.breakpoints.down('sm'));
+    const theme = useTheme();
+    const smDown = useMediaQuery(theme.breakpoints.down('sm'));
 
-  return (
-    <>
-      <Drawer open={true} variant={smDown ? 'temporary':'permanent'}>
-        <Box width={theme.spacing(26)} height='100%'
-          padding={theme.spacing(2)} display='flex' flexDirection='column'>
+    const { isDrawerOpen, toggleDrawer } = useDrawerContext();
 
-          <Box width='100%' height={theme.spacing(20)}
-            display='flex' alignItems='center'
-            justifyContent='center'>
+    return (
+        <>
+            <Drawer open={isDrawerOpen} variant={smDown ? 'temporary' : 'permanent'} 
+                onClose={toggleDrawer}>
+                <Box width={theme.spacing(26)} height='100%'
+                    padding={theme.spacing(2)} display='flex' flexDirection='column'>
 
-            <Avatar
-              sx={{ width: theme.spacing(12), height: theme.spacing(12) }}>
-              User
-            </Avatar>
+                    <Box width='100%' height={theme.spacing(20)}
+                        display='flex' alignItems='center'
+                        justifyContent='center'>
 
-          </Box>
+                        <Avatar
+                            sx={{ width: theme.spacing(12), height: theme.spacing(12) }}>
+                            User
+                        </Avatar>
 
-          <Divider />
+                    </Box>
 
-          <Box flex='1'>
-            <List component='nav'>
-              <ListItemButton>
-                <ListItemIcon>
-                  <Icon>home</Icon>
-                </ListItemIcon>
-                <ListItemText primary='Página inicial' />
-              </ListItemButton>
-            </List>
-          </Box>
+                    <Divider />
 
-        </Box>
-      </Drawer>
-      <Box height='100vh' marginLeft={theme.spacing(30.5)}>
-        {children}
-      </Box>
-    </>
-  );
+                    <Box flex='1'>
+                        <List component='nav'>
+                            <ListItemButton>
+                                <ListItemIcon>
+                                    <Icon>home</Icon>
+                                </ListItemIcon>
+                                <ListItemText primary='Página inicial' />
+                            </ListItemButton>
+                        </List>
+                    </Box>
+
+                </Box>
+            </Drawer>
+            <Box height='100vh' marginLeft={smDown ? 0 : theme.spacing(30.5)}>
+                {children}
+            </Box>
+        </>
+    );
 };
