@@ -13,7 +13,7 @@ import {
 import { Box } from '@mui/system';
 import { useNavigate, useResolvedPath, useMatch } from 'react-router-dom';
 
-import { useDrawerContext } from '../../contexts';
+import { useAppThemeContext, useDrawerContext } from '../../contexts';
 
 interface MenuLateralProps {
     children: React.ReactNode;
@@ -51,11 +51,11 @@ const ListItemLink: React.FC<ListItemLinkProps> = ({ label, icon, to, onClick })
 
 
 export const MenuLateral: React.FC<MenuLateralProps> = ({ children }) => {
-
     const theme = useTheme();
     const smDown = useMediaQuery(theme.breakpoints.down('sm'));
 
     const { isDrawerOpen, toggleDrawer, drawerOption } = useDrawerContext();
+    const { toggleTheme } = useAppThemeContext();
 
     return (
         <>
@@ -88,6 +88,16 @@ export const MenuLateral: React.FC<MenuLateralProps> = ({ children }) => {
                                     onClick={smDown ? toggleDrawer : undefined}
                                 />
                             ))}
+                        </List>
+                    </Box>
+                    <Box>
+                        <List component='nav'>
+                            <ListItemButton onClick={toggleTheme}>
+                                <ListItemIcon>
+                                    <Icon>dark_mode</Icon>
+                                </ListItemIcon>
+                                <ListItemText primary='Alterar Tema' />
+                            </ListItemButton>
                         </List>
                     </Box>
 

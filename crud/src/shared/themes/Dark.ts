@@ -1,8 +1,10 @@
 import { createTheme } from '@mui/material';
 import { indigo, amber } from '@mui/material/colors';
+import { iconButtonClasses } from '@mui/material/IconButton';
 
 export const DarkTheme = createTheme({
     palette: {
+        mode: 'dark',
         primary: {
             main: indigo[50],
             dark: indigo[50],
@@ -16,8 +18,13 @@ export const DarkTheme = createTheme({
             contrastText: amber[50]
         },
         background: {
-            default: '#0A2647',
-            paper: '#205295',
+            default: '#000000',
+            paper: '#080808',
         }
     },
+    typography: {
+        allVariants: {
+            color: '#FFF',
+        }
+    }
 });

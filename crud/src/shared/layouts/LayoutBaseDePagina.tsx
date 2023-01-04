@@ -1,32 +1,56 @@
-import { Box, IconButton, Icon, Typography, useTheme, useMediaQuery, Theme } from '@mui/material';
+import { ReactNode } from 'react';
+import {
+    Box,
+    IconButton,
+    Icon,
+    Typography,
+    useTheme,
+    useMediaQuery,
+    Theme
+} from '@mui/material';
+
+import { useDrawerContext } from '../contexts';
 
 interface ILayoutBaseDePaginaProps {
     titulo: string;
-
-    children: React.ReactNode;
+    barraDeFerramentas: ReactNode;
+    children: ReactNode;
 }
 
 export const LayoutBaseDePagina: React.FC<ILayoutBaseDePaginaProps> =
-    ({ children, titulo }) => {
+    ({ children, titulo, barraDeFerramentas }) => {
 
         const smDown = useMediaQuery((theme: Theme) => theme.breakpoints.down('sm'));
+        const mdDown = useMediaQuery((theme: Theme) => theme.breakpoints.down('md'));
         const theme = useTheme();
+
+        const { toggleDrawer } = useDrawerContext();
+
         return (
-            <Box height="100%" display="flex" flexDirection="column" gap={1}>
-                <Box display="flex" alignItems="center"
-                    padding={1} height={theme.spacing(12)} gap={1}>
-                    {smDown && (<IconButton>
-                        <Icon>menu</Icon>
-                    </IconButton>)
+            <Box height='100%' display='flex' flexDirection='column' gap={1}>
+                <Box display='flex' alignItems='center'
+                    padding={1} gap={1} 
+                    height={theme.spacing(smDown ? 4 : mdDown ? 8 : 12)} >
+                    {smDown &&
+                        (<IconButton onClick={toggleDrawer}>
+                            <Icon>menu</Icon>
+                        </IconButton>)
                     }
-                    <Typography variant='h5' component='h1'>
+                    <Typography
+                        variant={smDown ? 'h5' : mdDown ? 'h4' : 'h3'}
+                        component='h1'
+                        whiteSpace='nowrap'
+                        overflow='hidden'
+                        textOverflow='ellipsis'>
                         {titulo}
                     </Typography>
                 </Box>
-                <Box>
-                    Caixa de Ferramentas
-                </Box>
-                <Box>
+                {barraDeFerramentas &&
+                    (<Box>
+                        {barraDeFerramentas}
+                    </Box>)
+                }
+                <Box flex={1} overflow='auto'>
                     {children}
                 </Box>
             </Box>
