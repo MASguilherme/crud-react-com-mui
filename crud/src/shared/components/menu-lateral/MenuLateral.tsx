@@ -8,9 +8,9 @@ import {
     ListItemText,
     Icon,
     ListItemIcon,
-    useMediaQuery
+    useMediaQuery,
+    Box
 } from '@mui/material';
-import { Box } from '@mui/system';
 import { useNavigate, useResolvedPath, useMatch } from 'react-router-dom';
 
 import { useAppThemeContext, useDrawerContext } from '../../contexts';
