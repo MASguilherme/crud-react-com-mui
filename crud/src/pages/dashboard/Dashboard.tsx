@@ -4,7 +4,9 @@ import { FerramentasDeDetalhes } from '../../shared/components/';
 export const Dashboard = () => {
     return (
         <LayoutBaseDePagina titulo='Página Inicial'
-            barraDeFerramentas={ <FerramentasDeDetalhes />}>
+            barraDeFerramentas={
+                <FerramentasDeDetalhes />
+            }>
             Conteúdo
         </LayoutBaseDePagina >
     );
