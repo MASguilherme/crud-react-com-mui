@@ -1,1 +1,1 @@
-#crud React com Mui
+# CRUD completo feito em React, Material UI e Typescript.
