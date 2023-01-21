@@ -3,15 +3,45 @@ import {
   ListItemText, Icon,
   Drawer, useTheme,
   Divider, List,
+  useMediaQuery,
   Box, Avatar,
-  useMediaQuery
 } from '@mui/material';
+import { useNavigate, useResolvedPath ,useMatch } from 'react-router-dom';
 
 import { UseDrawerContext } from '../../contexts';
 
 interface IMenuLateralProps {
   children: React.ReactNode;
 }
+
+interface IListItemLinkProps {
+  icon: string
+  label: string;
+  toPage: string;
+  onClick: (() => void) | undefined;
+}
+
+
+const ListItemLink: React.FC<IListItemLinkProps> = ({ toPage, icon, label, onClick }) => {
+
+  const resolvedPath = useResolvedPath(toPage);
+  const match = useMatch({path: resolvedPath.pathname, end: false});
+  const navigate = useNavigate();
+
+  const closeMenu = () => {
+    navigate(toPage);
+    onClick?.();
+  };
+
+  return (
+    <ListItemButton selected={!!match} onClick={closeMenu}>
+      <ListItemIcon>
+        <Icon>{icon}</Icon>
+      </ListItemIcon>
+      <ListItemText primary={label} />
+    </ListItemButton>
+  );
+};
 
 export const MenuLateral: React.FC<IMenuLateralProps> = ({ children }) => {
   const theme = useTheme();
@@ -41,12 +71,12 @@ export const MenuLateral: React.FC<IMenuLateralProps> = ({ children }) => {
 
           <Box flex={1}>
             <List>
-              <ListItemButton>
-                <ListItemIcon>
-                  <Icon>home</Icon>
-                </ListItemIcon>
-                <ListItemText primary='Página Inicial' />
-              </ListItemButton>
+              <ListItemLink
+                toPage='pagina-inicial'
+                icon='home'
+                label='Página Inicial'
+                onClick={smDown || mdDown ? toggleDrawer : undefined}
+              />
             </List>
           </Box>
 
