@@ -6,7 +6,7 @@ import {
   useMediaQuery,
   Box, Avatar,
 } from '@mui/material';
-import { useNavigate, useResolvedPath ,useMatch } from 'react-router-dom';
+import { useNavigate, useResolvedPath, useMatch } from 'react-router-dom';
 
 import { UseDrawerContext } from '../../contexts';
 
@@ -25,7 +25,7 @@ interface IListItemLinkProps {
 const ListItemLink: React.FC<IListItemLinkProps> = ({ toPage, icon, label, onClick }) => {
 
   const resolvedPath = useResolvedPath(toPage);
-  const match = useMatch({path: resolvedPath.pathname, end: false});
+  const match = useMatch({ path: resolvedPath.pathname, end: false });
   const navigate = useNavigate();
 
   const closeMenu = () => {
@@ -46,7 +46,7 @@ const ListItemLink: React.FC<IListItemLinkProps> = ({ toPage, icon, label, onCli
 export const MenuLateral: React.FC<IMenuLateralProps> = ({ children }) => {
   const theme = useTheme();
 
-  const { isDrawerOpen, toggleDrawer } = UseDrawerContext();
+  const { isDrawerOpen, toggleDrawer, drawerOptions } = UseDrawerContext();
 
   const smDown = useMediaQuery(theme.breakpoints.down('sm'));
   const mdDown = useMediaQuery(theme.breakpoints.down('md'));
@@ -71,12 +71,17 @@ export const MenuLateral: React.FC<IMenuLateralProps> = ({ children }) => {
 
           <Box flex={1}>
             <List>
-              <ListItemLink
-                toPage='pagina-inicial'
-                icon='home'
-                label='Página Inicial'
-                onClick={smDown || mdDown ? toggleDrawer : undefined}
-              />
+              {
+                drawerOptions.map((drawerOption) => (
+                  <ListItemLink
+                    key={drawerOption.path}
+                    toPage={drawerOption.path}
+                    icon={drawerOption.icon}
+                    label={drawerOption.label}
+                    onClick={smDown || mdDown ? toggleDrawer : undefined}
+                  />
+                ))
+              }
             </List>
           </Box>
 
