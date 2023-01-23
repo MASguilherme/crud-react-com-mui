@@ -49,12 +49,14 @@ export const MenuLateral: React.FC<IMenuLateralProps> = ({ children }) => {
   const { isDrawerOpen, toggleDrawer, drawerOptions } = UseDrawerContext();
 
   const smDown = useMediaQuery(theme.breakpoints.down('sm'));
+
   const mdDown = useMediaQuery(theme.breakpoints.down('md'));
 
   return (
-    <>
+    <Box>
+
       <Drawer open={isDrawerOpen}
-        variant={smDown || mdDown ? 'temporary' : 'permanent'}
+        variant={mdDown ? 'temporary' : 'permanent'}
         onClose={toggleDrawer}
       >
         <Box width={theme.spacing(28)} height='100%' display='flex' flexDirection='column'>
@@ -78,7 +80,7 @@ export const MenuLateral: React.FC<IMenuLateralProps> = ({ children }) => {
                     toPage={drawerOption.path}
                     icon={drawerOption.icon}
                     label={drawerOption.label}
-                    onClick={smDown || mdDown ? toggleDrawer : undefined}
+                    onClick={mdDown ? toggleDrawer : undefined}
                   />
                 ))
               }
@@ -88,9 +90,10 @@ export const MenuLateral: React.FC<IMenuLateralProps> = ({ children }) => {
         </Box>
       </Drawer>
 
-      <Box height='100vh' marginLeft={smDown || mdDown ? 0 : theme.spacing(28)}>
+      <Box height='100vh' marginLeft={mdDown ? 0 : theme.spacing(28)}>
         {children}
       </Box>
-    </>
+
+    </Box>
   );
 };
