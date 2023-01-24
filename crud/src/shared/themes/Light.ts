@@ -20,6 +20,11 @@ export const LightTheme = createTheme({
       paper: '#F5F5F5'
     }
   },
-
+  typography: {
+    allVariants: {
+      color: '#000000'
+      
+    }
+  }
 
 });

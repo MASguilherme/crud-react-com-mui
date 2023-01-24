@@ -5,10 +5,11 @@ import {
   Divider, List,
   useMediaQuery,
   Box, Avatar,
+  Typography
 } from '@mui/material';
 import { useNavigate, useResolvedPath, useMatch } from 'react-router-dom';
 
-import { UseDrawerContext } from '../../contexts';
+import { UseDrawerContext, UseAppThemeContext } from '../../contexts';
 
 interface IMenuLateralProps {
   children: React.ReactNode;
@@ -52,6 +53,8 @@ export const MenuLateral: React.FC<IMenuLateralProps> = ({ children }) => {
 
   const mdDown = useMediaQuery(theme.breakpoints.down('md'));
 
+  const { toggleTheme } = UseAppThemeContext();
+
   return (
     <Box>
 
@@ -65,7 +68,7 @@ export const MenuLateral: React.FC<IMenuLateralProps> = ({ children }) => {
             display='flex' alignItems='center' justifyContent='center'
           >
             <Avatar sx={{ width: theme.spacing(12), height: theme.spacing(12) }}>
-              G
+              <Typography>G</Typography>
             </Avatar>
           </Box>
 
@@ -84,6 +87,16 @@ export const MenuLateral: React.FC<IMenuLateralProps> = ({ children }) => {
                   />
                 ))
               }
+            </List>
+          </Box>
+          <Box>
+            <List>
+              <ListItemButton onClick={toggleTheme}>
+                <ListItemIcon>
+                  <Icon>dark_mode</Icon>
+                </ListItemIcon>
+                <ListItemText primary='Trocar Tema' />
+              </ListItemButton>
             </List>
           </Box>
 
