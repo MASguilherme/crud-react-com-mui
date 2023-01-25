@@ -6,6 +6,9 @@ import { DarkTheme, LightTheme } from './../themes';
 interface IThemeContext {
   themeName: 'light' | 'dark';
   toggleTheme: () => void;
+
+  themeText?: string;
+  toggleTextTheme?: () => void;
 }
 interface IAppThemeProviderProps {
   children: React.ReactNode;
