@@ -7,6 +7,7 @@ export const Dashboard: React.FC = () => {
       barraDeFerramentas={
         <FerramentaDeDetalhe
           textoBotaoNovo='Novo'
+          mostrarBotaoSalvarEFechar
         />
       }
     >

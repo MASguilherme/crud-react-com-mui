@@ -1,5 +1,5 @@
 import { createTheme } from '@mui/material';
-import { indigo, yellow } from '@mui/material/colors';
+import { red, yellow } from '@mui/material/colors';
 
 export const DarkTheme = createTheme({
   palette: {
@@ -11,9 +11,9 @@ export const DarkTheme = createTheme({
       contrastText: '#FFFFFF'
     },
     secondary: {
-      main: indigo[600],
-      dark: indigo[700],
-      light: indigo[500],
+      main: red[800],
+      dark: red[900],
+      light: red[600],
       contrastText: '#FFFFFF'
     },
     background: {

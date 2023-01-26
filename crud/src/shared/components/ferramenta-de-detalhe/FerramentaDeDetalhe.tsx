@@ -1,16 +1,27 @@
-import { Box, Paper, useTheme, Button, Icon, Divider } from '@mui/material';
+import {
+  Typography, useMediaQuery,
+  Icon, Divider, Skeleton,
+  useTheme, Button,
+  Box, Paper,
+} from '@mui/material';
 
 
 interface IFerramentaDeDetalheProps {
   textoBotaoNovo: string;
 
-  mostrarBotaoSalvarEVoltar?: boolean;
+  mostrarBotaoSalvarEFechar?: boolean;
   mostrarBotaoSalvar?: boolean;
   mostrarBotaoVoltar?: boolean;
   mostrarBotaoApagar?: boolean;
   mostrarBotaoNovo?: boolean;
 
-  aoClicarSalvarEVoltar?: () => void;
+  mostrarBotaoSalvarEFecharCarregando?: boolean;
+  mostrarBotaoSalvarCarregando?: boolean;
+  mostrarBotaoVoltarCarregando?: boolean;
+  mostrarBotaoApagarCarregando?: boolean;
+  mostrarBotaoNovoCarregando?: boolean;
+
+  aoClicarSalvarEFechar?: () => void;
   aoClicarSalvar?: () => void;
   aoClicarVoltar?: () => void;
   aoClicarApagar?: () => void;
@@ -21,13 +32,19 @@ interface IFerramentaDeDetalheProps {
 export const FerramentaDeDetalhe: React.FC<IFerramentaDeDetalheProps> = ({
   textoBotaoNovo = 'Novo',
 
-  mostrarBotaoSalvarEVoltar = true,
+  mostrarBotaoSalvarEFechar = false,
   mostrarBotaoApagar = true,
   mostrarBotaoSalvar = true,
   mostrarBotaoVoltar = true,
   mostrarBotaoNovo = true,
-  
-  aoClicarSalvarEVoltar,
+
+  mostrarBotaoSalvarEFecharCarregando = false,
+  mostrarBotaoApagarCarregando = false,
+  mostrarBotaoSalvarCarregando = false,
+  mostrarBotaoVoltarCarregando = false,
+  mostrarBotaoNovoCarregando = false,
+
+  aoClicarSalvarEFechar,
   aoClicarApagar,
   aoClicarSalvar,
   aoClicarVoltar,
@@ -37,48 +54,93 @@ export const FerramentaDeDetalhe: React.FC<IFerramentaDeDetalheProps> = ({
 
   const theme = useTheme();
 
+  const mdDown = useMediaQuery(theme.breakpoints.down('md'));
+  const smDown = useMediaQuery(theme.breakpoints.down('sm'));
+
   return (
     <Box display='flex'
-      height={theme.spacing(6)}
+      // height={theme.spacing(6)}
       alignItems='center'
       component={Paper}
       paddingX={2}
-      padding={1}
+      padding={2}
       marginX={2}
       gap={1}
+      flexDirection={smDown ? 'column-reverse' : 'row'}
     >
-      <Button variant='contained'
-        startIcon={<Icon>save</Icon>}
-      >
-        Salvar
-      </Button>
+      {/* Salvar */}
+      {(mostrarBotaoSalvar && !mostrarBotaoSalvarCarregando) &&
+        (<Button variant='contained'
+          startIcon={<Icon>save</Icon>}
+        >
+          <Typography variant='button' noWrap>
+            Salvar
+          </Typography>
+        </Button>)
+      }
+      {mostrarBotaoSalvarCarregando &&
+        (<Skeleton width={theme.spacing(13.8)} height={theme.spacing(7.8)} />)
+      }
 
-      <Button variant='outlined'
-        startIcon={<Icon>save</Icon>}
-      >
-        Salvar e Voltar
-      </Button>
+      {/* Salvar e Fechar */}
+      {(mostrarBotaoSalvarEFechar && !mostrarBotaoSalvarEFecharCarregando && !mdDown) &&
+        (<Button variant='outlined'
+          startIcon={<Icon>save</Icon>}
+        >
+          <Typography variant='button' noWrap>
+            Salvar e Fechar
+          </Typography>
+        </Button>)
 
-      <Button variant='outlined'
-        startIcon={<Icon>arrow_back</Icon>}
-      >
-        Voltar
-      </Button>
+      }
+      {(mostrarBotaoSalvarEFecharCarregando && !mdDown) &&
+        (<Skeleton width={theme.spacing(22.6)} height={theme.spacing(7.8)} />)
+      }
 
-      <Button variant='outlined'
-        startIcon={<Icon>delete</Icon>}
-      >
-        Apagar
-      </Button>
+      {/* Apagar */}
+      {(mostrarBotaoApagar && !mostrarBotaoApagarCarregando) &&
+        (<Button variant='outlined'
+          startIcon={<Icon>delete</Icon>}
+        >
+          <Typography variant='button' noWrap>
+            Apagar
+          </Typography>
+        </Button>)
+      }
+      {mostrarBotaoApagarCarregando &&
+        (<Skeleton width={theme.spacing(13.8)} height={theme.spacing(7.8)} />)
+      }
 
-      <Divider variant='middle' orientation='vertical' />
+      {/* Voltar */}
+      {(mostrarBotaoVoltar && !mostrarBotaoVoltarCarregando) &&
+        (<Button variant='outlined'
+          startIcon={<Icon>arrow_back</Icon>}
+        >
+          <Typography variant='button' noWrap>
+            Voltar
+          </Typography>
+        </Button>)
+      }
+      {mostrarBotaoVoltarCarregando &&
+        (<Skeleton width={theme.spacing(13.8)} height={theme.spacing(7.8)} />)
+      }
 
-      <Button variant='outlined'
-        startIcon={<Icon>add</Icon>}
-      >
-        {textoBotaoNovo}
-      </Button>
+      {/* Divider */}
+      {!smDown && (<Divider variant='middle' orientation='vertical' />)}
 
+      {/* Novo */}
+      {(mostrarBotaoNovo && !mostrarBotaoNovoCarregando && !smDown) &&
+        (<Button variant='outlined'
+          startIcon={<Icon>add</Icon>}
+        >
+          <Typography variant='button' noWrap>
+            {textoBotaoNovo}
+          </Typography>
+        </Button>)
+      }
+      {(mostrarBotaoNovoCarregando && !smDown) &&
+        (<Skeleton width={theme.spacing(13.8)} height={theme.spacing(7.8)} />)
+      }
 
     </Box>
   );
