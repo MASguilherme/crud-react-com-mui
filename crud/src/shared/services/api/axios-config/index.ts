@@ -1,9 +1,12 @@
 import axios from 'axios';
 
 import { responseInterceptor, errorInterceptor } from './interceptor';
+import { Environment } from '../../../environment';
+
+const { URL_BASE } = Environment;
 
 const Api = axios.create({
-  baseURL: 'http://localhost:3333'
+  baseURL: URL_BASE,
 });
 
 Api.interceptors.response.use(

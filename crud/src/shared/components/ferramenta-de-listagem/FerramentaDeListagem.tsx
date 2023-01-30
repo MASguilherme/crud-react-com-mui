@@ -1,5 +1,7 @@
 import { Box, TextField, Button, Paper, useTheme, Icon } from '@mui/material';
 
+import { Environment } from '../../environment';
+
 interface IFerramentaDeListagemProps {
   textoDeBusca?: string;
   mostrartInputDeBusca?: boolean;
@@ -9,6 +11,8 @@ interface IFerramentaDeListagemProps {
   mostrarBotaoNovo?: boolean;
   aoClicarEmNovo?: () => void;
 }
+
+const { INPUT_DE_BUSCA } = Environment;
 
 export const FerramentaDeListagem: React.FC<IFerramentaDeListagemProps> = ({
   mostrartInputDeBusca = false,
@@ -36,7 +40,7 @@ export const FerramentaDeListagem: React.FC<IFerramentaDeListagemProps> = ({
 
       <Box display='flex' flex={1}>
         {mostrartInputDeBusca &&
-          (<TextField size='small' placeholder='Pesquisar...'
+          (<TextField size='small' placeholder={INPUT_DE_BUSCA}
             value={textoDeBusca}
             onChange={(e) => aoMudarTextoDeBusca?.(e.target.value)}
           />)
