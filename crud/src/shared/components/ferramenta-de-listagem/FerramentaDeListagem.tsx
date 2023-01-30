@@ -4,7 +4,7 @@ import { Environment } from '../../environment';
 
 interface IFerramentaDeListagemProps {
   textoDeBusca?: string;
-  mostrartInputDeBusca?: boolean;
+  mostrarInputDeBusca?: boolean;
   aoMudarTextoDeBusca?: (novoTexto: string) => void;
 
   textoBotaoNovo?: string;
@@ -15,7 +15,7 @@ interface IFerramentaDeListagemProps {
 const { INPUT_DE_BUSCA } = Environment;
 
 export const FerramentaDeListagem: React.FC<IFerramentaDeListagemProps> = ({
-  mostrartInputDeBusca = false,
+  mostrarInputDeBusca = false,
   aoMudarTextoDeBusca,
   textoDeBusca = '',
 
@@ -39,7 +39,7 @@ export const FerramentaDeListagem: React.FC<IFerramentaDeListagemProps> = ({
     >
 
       <Box display='flex' flex={1}>
-        {mostrartInputDeBusca &&
+        {mostrarInputDeBusca &&
           (<TextField size='small' placeholder={INPUT_DE_BUSCA}
             value={textoDeBusca}
             onChange={(e) => aoMudarTextoDeBusca?.(e.target.value)}
