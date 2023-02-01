@@ -1,6 +1,7 @@
-import { useMemo } from 'react';
+import { useMemo, useEffect } from 'react';
 import { useSearchParams } from 'react-router-dom';
 
+import { PessoasService } from '../../shared/services/api/pessoas/PessoasService';
 import { FerramentaDeListagem } from '../../shared/components';
 import { LayoutBaseDePagina } from '../../shared/layouts';
 
@@ -11,6 +12,18 @@ export const Pessoas: React.FC = () => {
   const busca = useMemo(() => {
     return searchParams.get('busca') || '';
   }, [searchParams]);
+
+  useEffect(() => {
+    PessoasService.getAll()
+      .then((result) => {
+        if (result instanceof Error) {
+          alert(result.message);
+        }
+        else {
+          console.log(result);
+        }
+      });
+  }, []);
 
   return (
     <LayoutBaseDePagina

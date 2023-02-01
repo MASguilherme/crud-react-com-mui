@@ -19,7 +19,7 @@ export const Environment = {
   /**
    * URL base de acesso ao database.
    */
-  URL_BASE: 'http://http://localhost:3333',
+  URL_BASE: 'http://localhost:3333',
 
 
 };

@@ -21,7 +21,6 @@ type TPessoasTotalCount = {
   totalCount: number;
 }
 
-const { LIMITE_DE_LINHAS } = Environment;
 
 const deleteById = async (id: number): Promise<void | Error> => {
 
@@ -65,13 +64,13 @@ const getById = async (id: number): Promise<IDetalhePessoa | Error> => {
 const getAll = async (page = 1, filter = ''): Promise<TPessoasTotalCount | Error> => {
 
   try {
-    const urlRelativa = `/pessoas?_page=${page}&_limit=${LIMITE_DE_LINHAS}&nomeCompleto=${filter}`;
+    const urlRelativa = `/pessoas?_page=${page}&_limit=${Environment.LIMITE_DE_LINHAS}&nomeCompleto=${filter}`;
     const { data, headers } = await Api.get(urlRelativa);
 
     if (data) {
       return {
         data,
-        totalCount: Number(headers['x-total-count'] || LIMITE_DE_LINHAS),
+        totalCount: Number(headers['x-total-count'] || Environment.LIMITE_DE_LINHAS),
       };
     }
     return new Error('Erro ao buscar os registros...');
