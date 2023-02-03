@@ -54,7 +54,7 @@ export const LayoutBaseDePagina: React.FC<ILayoutBaseDePaginaProps> = (
         </Box>)
       }
 
-      <Box flex='1' overflow='auto'>
+      <Box flex='1' overflow='auto' padding={theme.spacing(2)}>
         {children}
       </Box>
 

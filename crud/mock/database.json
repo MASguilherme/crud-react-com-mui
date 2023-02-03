@@ -2,15 +2,27 @@
   "pessoas": [
     {
       "id": 1,
-      "cidadeId": 2,
+      "cidadeId": 1,
       "nomeCompleto": "Guilherme Souza",
       "email": "guilherme@gmail.com"
     },
     {
       "id": 2,
       "cidadeId": 2,
-      "nomeCompleto": "Guilherme Souza",
-      "email": "guilherme@gmail.com"
+      "nomeCompleto": "José Amarildo",
+      "email": "joseamarildo@gmail.com"
+    },
+    {
+      "id": 3,
+      "cidadeId": 3,
+      "nomeCompleto": "Amanda",
+      "email": "amanda@gmail.com"
+    },
+    {
+      "id": 4,
+      "cidadeId": 4,
+      "nomeCompleto": "Saulo",
+      "email": "saulo@gmail.com"
     }
   ]
 }

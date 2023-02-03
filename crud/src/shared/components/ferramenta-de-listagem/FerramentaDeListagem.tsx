@@ -32,6 +32,7 @@ export const FerramentaDeListagem: React.FC<IFerramentaDeListagemProps> = ({
       height={theme.spacing(6)}
       alignItems='center'
       component={Paper}
+      boxShadow='none'
       paddingX={2}
       padding={2}
       marginX={2}

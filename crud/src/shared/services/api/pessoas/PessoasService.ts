@@ -2,21 +2,21 @@
 import { Environment } from '../../../environment';
 import { Api } from '../axios-config';
 
-interface IListagemPessoa {
+export interface IListagemPessoa {
   nomeCompleto: string;
   cidadeId: number;
   email: string;
   id: number;
 }
 
-interface IDetalhePessoa {
+export interface IDetalhePessoa {
   nomeCompleto: string;
   cidadeId: number;
   email: string;
   id: number;
 }
 
-type TPessoasTotalCount = {
+export type TPessoasTotalCount = {
   data: IListagemPessoa[];
   totalCount: number;
 }
@@ -59,12 +59,13 @@ const getById = async (id: number): Promise<IDetalhePessoa | Error> => {
     console.error(Error);
     return Error((error as { message: string }).message || 'Erro ao buscar o registro');
   }
-};
+};export 
 
 const getAll = async (page = 1, filter = ''): Promise<TPessoasTotalCount | Error> => {
 
   try {
-    const urlRelativa = `/pessoas?_page=${page}&_limit=${Environment.LIMITE_DE_LINHAS}&nomeCompleto=${filter}`;
+    const urlRelativa =
+      `/pessoas?_page=${page}&_limit=${Environment.LIMITE_DE_LINHAS}&nomeCompleto_like=${filter}`;
     const { data, headers } = await Api.get(urlRelativa);
 
     if (data) {
