@@ -1,10 +1,12 @@
 import { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { LinearProgress } from '@mui/material';
+import { Form } from '@unform/web';
 
 import { PessoasService } from '../../shared/services/api/pessoas/PessoasService';
 import { FerramentaDeDetalhe } from '../../shared/components';
 import { LayoutBaseDePagina } from '../../shared/layouts';
+import { UnTextField } from '../../shared/forms';
 
 export const DetalheDePessoa: React.FC = () => {
 
@@ -68,10 +70,15 @@ export const DetalheDePessoa: React.FC = () => {
         />
       }
     >
-      {isLoading && (
-        <LinearProgress variant='indeterminate' />
-      )}
-      {id}
+
+      <Form onSubmit={console.log}>
+
+        <UnTextField
+          name='nomeCompleto'
+        />
+        <button type='submit'>Submit</button>
+      </Form>
+
     </LayoutBaseDePagina>
   );
 };
