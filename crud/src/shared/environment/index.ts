@@ -4,7 +4,7 @@ export const Environment = {
   /**
    * Define a quantidade de linhas a serem carregadas por padrão.
    */
-  LIMITE_DE_LINHAS: 10,
+  LIMITE_DE_LINHAS: 4,
 
   /**
    * Texto da input de busca.

@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import { Routes, Route, Navigate } from 'react-router-dom';
 
 import { UseDrawerContext } from '../shared/contexts';
-import { Dashboard, Pessoas } from '../pages';
+import { Dashboard, Pessoas, DetalheDePessoa } from '../pages';
 
 export const AppRoutes = () => {
   const { setDrawerOptions } = UseDrawerContext();
@@ -25,26 +25,14 @@ export const AppRoutes = () => {
   return (
     <Routes>
 
-      <Route path='pagina-inicial'
-        element={
-          <Dashboard />
-        }
-      />
+      <Route path='pagina-inicial' element={<Dashboard />} />
 
-      <Route path='pessoas'
-        element={
-          <Pessoas />
-        }
-      />
+      <Route path='pessoas' element={<Pessoas />} />
 
-      {/* <Route path='pessoas/detalhe/:id'
-        element={
-          <Pessoas />
-        }
-      /> */}
-
-
+      <Route path='pessoas/detalhe/:id' element={<DetalheDePessoa />} />
+      
       <Route path='*' element={<Navigate to='pagina-inicial' />} />
+
     </Routes>
   );
 };

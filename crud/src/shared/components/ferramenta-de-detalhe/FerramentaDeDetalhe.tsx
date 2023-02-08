@@ -64,7 +64,7 @@ export const FerramentaDeDetalhe: React.FC<IFerramentaDeDetalheProps> = ({
       component={Paper}
       paddingX={2}
       padding={2}
-      marginX={2}
+      marginX={1}
       gap={1}
       flexDirection={smDown ? 'column-reverse' : 'row'}
     >
@@ -72,6 +72,7 @@ export const FerramentaDeDetalhe: React.FC<IFerramentaDeDetalheProps> = ({
       {(mostrarBotaoSalvar && !mostrarBotaoSalvarCarregando) &&
         (<Button variant='contained'
           startIcon={<Icon>save</Icon>}
+          onClick={aoClicarSalvar}
         >
           <Typography variant='button' noWrap>
             Salvar
@@ -86,6 +87,7 @@ export const FerramentaDeDetalhe: React.FC<IFerramentaDeDetalheProps> = ({
       {(mostrarBotaoSalvarEFechar && !mostrarBotaoSalvarEFecharCarregando && !mdDown) &&
         (<Button variant='outlined'
           startIcon={<Icon>save</Icon>}
+          onClick={aoClicarSalvarEFechar}
         >
           <Typography variant='button' noWrap>
             Salvar e Fechar
@@ -101,6 +103,7 @@ export const FerramentaDeDetalhe: React.FC<IFerramentaDeDetalheProps> = ({
       {(mostrarBotaoApagar && !mostrarBotaoApagarCarregando) &&
         (<Button variant='outlined'
           startIcon={<Icon>delete</Icon>}
+          onClick={aoClicarApagar}
         >
           <Typography variant='button' noWrap>
             Apagar
@@ -115,6 +118,7 @@ export const FerramentaDeDetalhe: React.FC<IFerramentaDeDetalheProps> = ({
       {(mostrarBotaoVoltar && !mostrarBotaoVoltarCarregando) &&
         (<Button variant='outlined'
           startIcon={<Icon>arrow_back</Icon>}
+          onClick={aoClicarVoltar}
         >
           <Typography variant='button' noWrap>
             Voltar
@@ -132,6 +136,7 @@ export const FerramentaDeDetalhe: React.FC<IFerramentaDeDetalheProps> = ({
       {(mostrarBotaoNovo && !mostrarBotaoNovoCarregando && !smDown) &&
         (<Button variant='outlined'
           startIcon={<Icon>add</Icon>}
+          onClick={aoClicarNovo}
         >
           <Typography variant='button' noWrap>
             {textoBotaoNovo}
