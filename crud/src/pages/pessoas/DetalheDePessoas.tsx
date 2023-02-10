@@ -1,6 +1,6 @@
 import { useEffect, useState, useRef } from 'react';
+import { Box, Grid, LinearProgress, Paper, Typography, useMediaQuery, useTheme } from '@mui/material';
 import { useParams, useNavigate } from 'react-router-dom';
-import { LinearProgress } from '@mui/material';
 import { FormHandles } from '@unform/core';
 import { Form } from '@unform/web';
 
@@ -23,28 +23,12 @@ export const DetalheDePessoa: React.FC = () => {
 
   const formRef = useRef<FormHandles>(null);
 
+  const theme = useTheme();
+
+  const smDown = useMediaQuery(theme.breakpoints.down('sm'));
+
   const [isLoading, setIsLoading] = useState(false);
   const [name, setName] = useState('');
-
-  useEffect(() => {
-    if (id !== 'nova') {
-      setIsLoading(true);
-
-      PessoasService.getById(Number(id))
-        .then((result) => {
-          setIsLoading(false);
-
-          if (result instanceof Error) {
-            alert(result.message);
-            navigate('/pessoas');
-          } else {
-            formRef.current?.setData(result);
-            setName(result.nomeCompleto);
-            console.log(result);
-          }
-        });
-    }
-  }, [id]);
 
   const handleSave = (dados: IFormData) => {
     setIsLoading(true);
@@ -62,7 +46,7 @@ export const DetalheDePessoa: React.FC = () => {
           }
         });
     } else {
-      PessoasService.updateById(Number(id), {id: Number(id), ...dados})
+      PessoasService.updateById(Number(id), { id: Number(id), ...dados })
         .then((result) => {
           setIsLoading(false);
 
@@ -96,6 +80,27 @@ export const DetalheDePessoa: React.FC = () => {
     }
   }
 
+  useEffect(() => {
+    if (id !== 'nova') {
+      setIsLoading(true);
+
+      PessoasService.getById(Number(id))
+        .then((result) => {
+          setIsLoading(false);
+
+          if (result instanceof Error) {
+            alert(result.message);
+            navigate('/pessoas');
+          } else {
+            setName(result.nomeCompleto);
+            formRef.current?.setData(result);
+
+            console.log(result);
+          }
+        });
+    }
+  }, [id]);
+
   return (
     <LayoutBaseDePagina
       titulo={id !== 'nova' ? name : 'Cadastrar'}
@@ -114,15 +119,47 @@ export const DetalheDePessoa: React.FC = () => {
         />
       }
     >
-
       <Form ref={formRef} onSubmit={handleSave}>
 
-        <UnTextField placeholder='Nome Completo' name='nomeCompleto' />
+        <Box component={Paper} variant='outlined'
+          padding={2}
+        >
+          <Grid container>
 
-        <UnTextField placeholder='E-mail' name='email' />
+            <Grid container item direction='row' paddingBottom={3}>
+              <Grid item xs={12}>
+                <Typography variant='h5'>
+                  Informações:
+                </Typography>
+                <LinearProgress variant='indeterminate' />
+              </Grid>
+            </Grid>
 
-        <UnTextField placeholder='Cidade Id' name='cidadeId' />
+            <Grid container item
+              spacing={3}
+            >
+              <Grid item xs={12} md={8} lg={6}>
+                <UnTextField placeholder='Nome Completo' name='nomeCompleto' label='Nome Completo'
+                  fullWidth
+                />
+              </Grid>
 
+              <Grid item xs={12} md={6}>
+                <UnTextField placeholder='E-mail' name='email' label='E-mail'
+                  fullWidth
+                />
+              </Grid>
+
+              <Grid item xs={12} md={6}>
+                <UnTextField placeholder='Cidade Id' name='cidadeId' label='Cidade'
+                  fullWidth
+                />
+              </Grid>
+
+            </Grid>
+          </Grid>
+
+        </Box>
       </Form>
 
     </LayoutBaseDePagina>

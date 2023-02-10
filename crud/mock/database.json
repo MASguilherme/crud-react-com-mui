@@ -2,9 +2,9 @@
   "pessoas": [
     {
       "id": 1,
-      "cidadeId": 1,
       "nomeCompleto": "Guilherme Souza",
-      "email": "guilherme@gmail.com"
+      "email": "guilherme@gmail.com",
+      "cidadeId": 1
     },
     {
       "id": 2,
