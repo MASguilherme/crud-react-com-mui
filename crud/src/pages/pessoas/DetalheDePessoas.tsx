@@ -111,7 +111,7 @@ export const DetalheDePessoa: React.FC = () => {
           mostrarBotaoApagar={id !== 'nova'}
           mostrarBotaoNovo={id !== 'nova'}
 
-          aoClicarVoltar={() => navigate('/pessoas  ')}
+          aoClicarVoltar={() => navigate('/pessoas')}
           aoClicarNovo={() => navigate('/pessoas/detalhe/nova')}
           aoClicarApagar={() => handleDelete(Number(id))}
           aoClicarSalvar={formRef.current?.submitForm}
@@ -126,12 +126,15 @@ export const DetalheDePessoa: React.FC = () => {
         >
           <Grid container>
 
+            <Grid item xs={12} paddingY={1}>
+              {isLoading && (<LinearProgress variant='indeterminate' />)}
+            </Grid>
+
             <Grid container item direction='row' paddingBottom={3}>
               <Grid item xs={12}>
                 <Typography variant='h5'>
                   Informações:
                 </Typography>
-                <LinearProgress variant='indeterminate' />
               </Grid>
             </Grid>
 
@@ -139,20 +142,30 @@ export const DetalheDePessoa: React.FC = () => {
               spacing={3}
             >
               <Grid item xs={12} md={8} lg={6}>
-                <UnTextField placeholder='Nome Completo' name='nomeCompleto' label='Nome Completo'
-                  fullWidth
+                <UnTextField
+                  placeholder='Nome Completo'
+                  name='nomeCompleto'
+                  label='Nome Completo'
+                  fullWidth disabled={isLoading}
+                  onChange={e => setName(e.target.value)}
                 />
               </Grid>
 
               <Grid item xs={12} md={6}>
-                <UnTextField placeholder='E-mail' name='email' label='E-mail'
-                  fullWidth
+                <UnTextField
+                  placeholder='E-mail'
+                  name='email'
+                  label='E-mail'
+                  fullWidth disabled={isLoading}
                 />
               </Grid>
 
               <Grid item xs={12} md={6}>
-                <UnTextField placeholder='Cidade Id' name='cidadeId' label='Cidade'
-                  fullWidth
+                <UnTextField
+                  placeholder='Cidade'
+                  name='cidadeId'
+                  label='Cidade'
+                  fullWidth disabled={isLoading}
                 />
               </Grid>
 

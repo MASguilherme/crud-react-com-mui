@@ -29,9 +29,9 @@ export const UnTextField: React.FC<TUnTextFieldProps> = ({ name, ...rest }) => {
       defaultValue={defaultValue}
 
       value={value}
-      onChange={e => setValue(e.target.value)}
+      onChange={e => {setValue(e.target.value); rest.onChange?.(e);}}
 
-      onKeyDown={() => error ? clearError() : undefined}
+      onKeyDown={(e) =>{ error && clearError(); rest.onKeyDown?.(e);}}
     />
   );
 };
