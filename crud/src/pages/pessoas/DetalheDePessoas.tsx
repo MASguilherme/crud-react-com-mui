@@ -38,6 +38,7 @@ export const DetalheDePessoa: React.FC = () => {
             alert(result.message);
             navigate('/pessoas');
           } else {
+            formRef.current?.setData(result);
             setName(result.nomeCompleto);
             console.log(result);
           }
@@ -46,7 +47,32 @@ export const DetalheDePessoa: React.FC = () => {
   }, [id]);
 
   const handleSave = (dados: IFormData) => {
-    console.log(dados);
+    setIsLoading(true);
+
+    if (id === 'nova') {
+      PessoasService.create(dados)
+        .then((result) => {
+          setIsLoading(false);
+
+          if (result instanceof Error) {
+            alert(result.message);
+          } else {
+            alert('Pessoa cadastrada com sucesso!');
+            navigate(`/pessoas/detalhe/${result}`);
+          }
+        });
+    } else {
+      PessoasService.updateById(Number(id), {id: Number(id), ...dados})
+        .then((result) => {
+          setIsLoading(false);
+
+          if (result instanceof Error) {
+            alert(result.message);
+          } else {
+            alert('Atualizado com Sucesso!');
+          }
+        });
+    }
   };
 
   const handleDelete = (id: number) => {
@@ -91,11 +117,11 @@ export const DetalheDePessoa: React.FC = () => {
 
       <Form ref={formRef} onSubmit={handleSave}>
 
-        <UnTextField name='nomeCompleto' />
+        <UnTextField placeholder='Nome Completo' name='nomeCompleto' />
 
-        <UnTextField name='email' />
+        <UnTextField placeholder='E-mail' name='email' />
 
-        <UnTextField name='cidadeId' />
+        <UnTextField placeholder='Cidade Id' name='cidadeId' />
 
       </Form>
 
