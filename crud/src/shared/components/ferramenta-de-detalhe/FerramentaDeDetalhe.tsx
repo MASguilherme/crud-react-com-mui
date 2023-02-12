@@ -8,6 +8,8 @@ import {
 
 interface IFerramentaDeDetalheProps {
   textoBotaoNovo: string;
+  textoBotaoSalvar?: string;
+  textoBotaoSalvarEFechar?: string;
 
   mostrarBotaoSalvarEFechar?: boolean;
   mostrarBotaoSalvar?: boolean;
@@ -31,6 +33,8 @@ interface IFerramentaDeDetalheProps {
 
 export const FerramentaDeDetalhe: React.FC<IFerramentaDeDetalheProps> = ({
   textoBotaoNovo = 'Novo',
+  textoBotaoSalvar = 'Salvar',
+  textoBotaoSalvarEFechar = 'Salvar e Fechar',
 
   mostrarBotaoSalvarEFechar = false,
   mostrarBotaoApagar = true,
@@ -75,7 +79,7 @@ export const FerramentaDeDetalhe: React.FC<IFerramentaDeDetalheProps> = ({
           onClick={aoClicarSalvar}
         >
           <Typography variant='button' noWrap>
-            Salvar
+            {textoBotaoSalvar}
           </Typography>
         </Button>)
       }
@@ -90,7 +94,7 @@ export const FerramentaDeDetalhe: React.FC<IFerramentaDeDetalheProps> = ({
           onClick={aoClicarSalvarEFechar}
         >
           <Typography variant='button' noWrap>
-            Salvar e Fechar
+            {textoBotaoSalvarEFechar}
           </Typography>
         </Button>)
 

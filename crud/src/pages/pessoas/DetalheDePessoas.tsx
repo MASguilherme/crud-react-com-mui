@@ -1,13 +1,12 @@
 import { useEffect, useState, useRef } from 'react';
-import { Box, Grid, LinearProgress, Paper, Typography, useMediaQuery, useTheme } from '@mui/material';
+import { Box, Grid, LinearProgress, Paper, Typography } from '@mui/material';
 import { useParams, useNavigate } from 'react-router-dom';
 import { FormHandles } from '@unform/core';
-import { Form } from '@unform/web';
 
 import { PessoasService } from '../../shared/services/api/pessoas/PessoasService';
 import { FerramentaDeDetalhe } from '../../shared/components';
 import { LayoutBaseDePagina } from '../../shared/layouts';
-import { UnTextField } from '../../shared/forms';
+import { UnTextField, UnForm } from '../../shared/forms';
 
 interface IFormData {
   nomeCompleto: string;
@@ -22,13 +21,37 @@ export const DetalheDePessoa: React.FC = () => {
   const navigate = useNavigate();
 
   const formRef = useRef<FormHandles>(null);
-
-  const theme = useTheme();
-
-  const smDown = useMediaQuery(theme.breakpoints.down('sm'));
-
+  
   const [isLoading, setIsLoading] = useState(false);
   const [name, setName] = useState('');
+  
+  useEffect(() => {
+    if (id !== 'nova') {
+      setIsLoading(true);
+
+      PessoasService.getById(Number(id))
+        .then((result) => {
+          setIsLoading(false);
+
+          if (result instanceof Error) {
+            alert(result.message);
+            navigate('/pessoas');
+          } else {
+            setName(result.nomeCompleto);
+            formRef.current?.setData(result);
+
+            console.log(result);
+          }
+        });
+    } else{
+      formRef.current?.setData({
+        nomeCompleto: '',
+        email: '',
+        cidadeId: '',
+      });
+      navigate(`/pessoas/detalhe/${id}`);
+    }
+  }, [id]);
 
   const handleSave = (dados: IFormData) => {
     setIsLoading(true);
@@ -73,33 +96,6 @@ export const DetalheDePessoa: React.FC = () => {
     }
   };
 
-  interface IEndereco {
-    endereco: {
-      rua: string,
-      numero: number,
-    }
-  }
-
-  useEffect(() => {
-    if (id !== 'nova') {
-      setIsLoading(true);
-
-      PessoasService.getById(Number(id))
-        .then((result) => {
-          setIsLoading(false);
-
-          if (result instanceof Error) {
-            alert(result.message);
-            navigate('/pessoas');
-          } else {
-            setName(result.nomeCompleto);
-            formRef.current?.setData(result);
-
-            console.log(result);
-          }
-        });
-    }
-  }, [id]);
 
   return (
     <LayoutBaseDePagina
@@ -107,6 +103,8 @@ export const DetalheDePessoa: React.FC = () => {
       barraDeFerramentas={
         <FerramentaDeDetalhe
           textoBotaoNovo='nova'
+          textoBotaoSalvar={id !== 'nova' ? 'Atualizar' : 'Salvar'}
+          textoBotaoSalvarEFechar={id !== 'nova' ? 'Atualizar e Fechar' : 'Salvar e Fechar'}
           mostrarBotaoSalvarEFechar
           mostrarBotaoApagar={id !== 'nova'}
           mostrarBotaoNovo={id !== 'nova'}
@@ -119,7 +117,7 @@ export const DetalheDePessoa: React.FC = () => {
         />
       }
     >
-      <Form ref={formRef} onSubmit={handleSave}>
+      <UnForm ref={formRef} onSubmit={handleSave}>
 
         <Box component={Paper} variant='outlined'
           padding={2}
@@ -173,7 +171,7 @@ export const DetalheDePessoa: React.FC = () => {
           </Grid>
 
         </Box>
-      </Form>
+      </UnForm>
 
     </LayoutBaseDePagina>
   );
