@@ -1,12 +1,12 @@
-import { useEffect, useState, useRef } from 'react';
+import { useEffect, useState } from 'react';
 import { Box, Grid, LinearProgress, Paper, Typography } from '@mui/material';
 import { useParams, useNavigate } from 'react-router-dom';
-import { FormHandles } from '@unform/core';
+import * as yup from 'yup';
 
 import { PessoasService } from '../../shared/services/api/pessoas/PessoasService';
+import { UnTextField, UnForm, useUnForm } from '../../shared/forms';
 import { FerramentaDeDetalhe } from '../../shared/components';
 import { LayoutBaseDePagina } from '../../shared/layouts';
-import { UnTextField, UnForm } from '../../shared/forms';
 
 interface IFormData {
   nomeCompleto: string;
@@ -14,17 +14,19 @@ interface IFormData {
   cidadeId: number;
 }
 
+const formValidationSchema: yup.Schema<IFormData> = yup.object.shape();
+
 export const DetalheDePessoa: React.FC = () => {
 
   const { id = 'nova' } = useParams<'id'>();
 
   const navigate = useNavigate();
 
-  const formRef = useRef<FormHandles>(null);
-  
+  const { formRef, isSaveAndClose, saveAndClose, save } = useUnForm();
+
   const [isLoading, setIsLoading] = useState(false);
   const [name, setName] = useState('');
-  
+
   useEffect(() => {
     if (id !== 'nova') {
       setIsLoading(true);
@@ -43,7 +45,7 @@ export const DetalheDePessoa: React.FC = () => {
             console.log(result);
           }
         });
-    } else{
+    } else {
       formRef.current?.setData({
         nomeCompleto: '',
         email: '',
@@ -64,8 +66,13 @@ export const DetalheDePessoa: React.FC = () => {
           if (result instanceof Error) {
             alert(result.message);
           } else {
-            alert('Pessoa cadastrada com sucesso!');
-            navigate(`/pessoas/detalhe/${result}`);
+            if (isSaveAndClose()) {
+              alert('Pessoa cadastrada com sucesso!');
+              navigate('/pessoas');
+            } else {
+              alert('Pessoa cadastrada com sucesso!');
+              navigate(`/pessoas/detalhe/${result}`);
+            }
           }
         });
     } else {
@@ -76,7 +83,12 @@ export const DetalheDePessoa: React.FC = () => {
           if (result instanceof Error) {
             alert(result.message);
           } else {
-            alert('Atualizado com Sucesso!');
+            if (isSaveAndClose()) {
+              alert('Atualizado com Sucesso!');
+              navigate('/pessoas');
+            } else {
+              alert('Atualizado com Sucesso!');
+            }
           }
         });
     }
@@ -112,8 +124,8 @@ export const DetalheDePessoa: React.FC = () => {
           aoClicarVoltar={() => navigate('/pessoas')}
           aoClicarNovo={() => navigate('/pessoas/detalhe/nova')}
           aoClicarApagar={() => handleDelete(Number(id))}
-          aoClicarSalvar={formRef.current?.submitForm}
-          aoClicarSalvarEFechar={formRef.current?.submitForm}
+          aoClicarSalvar={save}
+          aoClicarSalvarEFechar={saveAndClose}
         />
       }
     >
