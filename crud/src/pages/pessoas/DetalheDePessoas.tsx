@@ -4,7 +4,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import * as yup from 'yup';
 
 import { PessoasService } from '../../shared/services/api/pessoas/PessoasService';
-import { UnTextField, UnForm, useUnForm } from '../../shared/forms';
+import { UnTextField, UnForm, useUnForm, IUnFormErrors } from '../../shared/forms';
 import { FerramentaDeDetalhe } from '../../shared/components';
 import { LayoutBaseDePagina } from '../../shared/layouts';
 
@@ -14,7 +14,11 @@ interface IFormData {
   cidadeId: number;
 }
 
-const formValidationSchema: yup.Schema<IFormData> = yup.object.shape();
+const formValidationSchema: yup.Schema<IFormData> = yup.object().shape({
+  nomeCompleto: yup.string().required().min(3),
+  email: yup.string().required().email(),
+  cidadeId: yup.number().required(),
+});
 
 export const DetalheDePessoa: React.FC = () => {
 
@@ -56,42 +60,63 @@ export const DetalheDePessoa: React.FC = () => {
   }, [id]);
 
   const handleSave = (dados: IFormData) => {
-    setIsLoading(true);
 
-    if (id === 'nova') {
-      PessoasService.create(dados)
-        .then((result) => {
-          setIsLoading(false);
+    formValidationSchema
+      .validate(dados, { abortEarly: false })
+      .then((dadosValidados) => {
 
-          if (result instanceof Error) {
-            alert(result.message);
-          } else {
-            if (isSaveAndClose()) {
-              alert('Pessoa cadastrada com sucesso!');
-              navigate('/pessoas');
-            } else {
-              alert('Pessoa cadastrada com sucesso!');
-              navigate(`/pessoas/detalhe/${result}`);
-            }
-          }
+        setIsLoading(true);
+
+        if (id === 'nova') {
+          PessoasService.create(dadosValidados)
+            .then((result) => {
+              setIsLoading(false);
+
+              if (result instanceof Error) {
+                alert(result.message);
+              } else {
+                if (isSaveAndClose()) {
+                  alert('Pessoa cadastrada com sucesso!');
+                  navigate('/pessoas');
+                } else {
+                  alert('Pessoa cadastrada com sucesso!');
+                  navigate(`/pessoas/detalhe/${result}`);
+                }
+              }
+            });
+        } else {
+          PessoasService.updateById(Number(id), { id: Number(id), ...dadosValidados })
+            .then((result) => {
+              setIsLoading(false);
+
+              if (result instanceof Error) {
+                alert(result.message);
+              } else {
+                if (isSaveAndClose()) {
+                  alert('Atualizado com Sucesso!');
+                  navigate('/pessoas');
+                } else {
+                  alert('Atualizado com Sucesso!');
+                }
+              }
+            });
+        }
+
+      })
+      .catch((errorsOfValidation: yup.ValidationError) => {
+        const validationErrors: IUnFormErrors = {};
+
+        errorsOfValidation.inner.forEach(error => {
+          if (!error.path) return;
+
+          validationErrors[error.path] = error.message;
         });
-    } else {
-      PessoasService.updateById(Number(id), { id: Number(id), ...dados })
-        .then((result) => {
-          setIsLoading(false);
 
-          if (result instanceof Error) {
-            alert(result.message);
-          } else {
-            if (isSaveAndClose()) {
-              alert('Atualizado com Sucesso!');
-              navigate('/pessoas');
-            } else {
-              alert('Atualizado com Sucesso!');
-            }
-          }
-        });
-    }
+        formRef.current?.setErrors(validationErrors);
+        console.log(validationErrors);
+      });
+
+
   };
 
   const handleDelete = (id: number) => {
@@ -165,7 +190,7 @@ export const DetalheDePessoa: React.FC = () => {
                 <UnTextField
                   placeholder='E-mail'
                   name='email'
-                  label='E-mail'
+                  label='email'
                   fullWidth disabled={isLoading}
                 />
               </Grid>

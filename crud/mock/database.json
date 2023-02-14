@@ -8,9 +8,9 @@
     },
     {
       "id": 2,
-      "nomeCompleto": "",
-      "email": "joseamarildo@gmail.com",
-      "cidadeId": 2
+      "cidadeId": 1,
+      "email": "joseph@email.com",
+      "nomeCompleto": "Joseph Virgulin"
     },
     {
       "id": 3,
@@ -89,6 +89,12 @@
       "nomeCompleto": "Shrek da Silva",
       "email": "shrek@gmail.com",
       "cidadeId": "12"
+    },
+    {
+      "id": 16,
+      "cidadeId": 12,
+      "email": "ana@bananasplit.com.br",
+      "nomeCompleto": "Ana Banana"
     }
   ]
 }
