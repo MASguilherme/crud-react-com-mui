@@ -5,6 +5,7 @@ import * as yup from 'yup';
 
 import { PessoasService } from '../../shared/services/api/pessoas/PessoasService';
 import { UnTextField, UnForm, useUnForm, IUnFormErrors } from '../../shared/forms';
+import { AutoCompleteCidade } from '../components/AutoCompleteCidade';
 import { FerramentaDeDetalhe } from '../../shared/components';
 import { LayoutBaseDePagina } from '../../shared/layouts';
 
@@ -196,12 +197,13 @@ export const DetalheDePessoa: React.FC = () => {
               </Grid>
 
               <Grid item xs={12} md={6}>
-                <UnTextField
+                {/* <UnTextField
                   placeholder='Cidade'
                   name='cidadeId'
                   label='Cidade'
                   fullWidth disabled={isLoading}
-                />
+                /> */}
+                <AutoCompleteCidade />
               </Grid>
 
             </Grid>
