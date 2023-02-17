@@ -54,7 +54,7 @@ export const DetalheDePessoa: React.FC = () => {
       formRef.current?.setData({
         nomeCompleto: '',
         email: '',
-        cidadeId: '',
+        cidadeId: undefined,
       });
       navigate(`/pessoas/detalhe/${id}`);
     }
@@ -197,13 +197,7 @@ export const DetalheDePessoa: React.FC = () => {
               </Grid>
 
               <Grid item xs={12} md={6}>
-                {/* <UnTextField
-                  placeholder='Cidade'
-                  name='cidadeId'
-                  label='Cidade'
-                  fullWidth disabled={isLoading}
-                /> */}
-                <AutoCompleteCidade />
+                <AutoCompleteCidade AutoCompleteLoading={isLoading} />
               </Grid>
 
             </Grid>

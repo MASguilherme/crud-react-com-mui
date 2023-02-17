@@ -17,11 +17,11 @@ export type TCidadesTotalCount = {
   totalCount: number;
 }
 
-const getAll = async (page = 1, filter = ''): Promise<TCidadesTotalCount | Error> => {
+const getAll = async (page = 1, filter = '', id = ''): Promise<TCidadesTotalCount | Error> => {
 
   try {
     const urlRelativa =
-      `/cidades?_page=${page}&_limit=${Environment.LIMITE_DE_LINHAS}&nomeCidade_like=${filter}`;
+      `/cidades?_page=${page}&_limit=${Environment.LIMITE_DE_LINHAS}&nomeCidade_like=${filter}&id_like=${id}`;
     const { data, headers } = await Api.get(urlRelativa);
 
     if (data) {
