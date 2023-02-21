@@ -49,16 +49,16 @@
       "cidadeId": 4
     },
     {
-      "id": 20,
-      "nomeCompleto": "Cristiano Ronaldo",
-      "email": "cr7@gmail.com",
-      "cidadeId": 5
-    },
-    {
       "id": 21,
       "nomeCompleto": "Miguel da Costa",
       "email": "costamiguel@gmail.com",
       "cidadeId": 4
+    },
+    {
+      "nomeCompleto": "Cristiano Ronaldo",
+      "email": "cris@cr7.com",
+      "cidadeId": 4,
+      "id": 22
     }
   ],
   "cidades": [
@@ -79,10 +79,6 @@
       "id": 4
     },
     {
-      "nomeCidade": "Osasco",
-      "id": 5
-    },
-    {
       "nomeCidade": "Rio de Janeiro",
       "id": 7
     },
@@ -93,6 +89,10 @@
     {
       "nomeCidade": "São João da Boa Vista",
       "id": 9
+    },
+    {
+      "nomeCidade": "Rio Claro",
+      "id": 10
     }
   ]
 }

@@ -4,14 +4,14 @@ import { Api } from '../axios-config';
 
 export interface IListagemPessoa {
   nomeCompleto: string;
-  cidadeId: number;
+  cidadeId?: number;
   email: string;
   id: number;
 }
 
 export interface IDetalhePessoa {
   nomeCompleto: string;
-  cidadeId: number;
+  cidadeId?: number;
   email: string;
   id: number;
 }
